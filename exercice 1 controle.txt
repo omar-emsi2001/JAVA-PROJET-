@@ -1,0 +1,30 @@
+public class ComparaisonTableaux {
+
+    public static void main(String[] args) {
+        
+        int[] tableau1 = {1, 2, 3, 4};
+        int[] tableau2 = {1, 2, 3, 4};
+        int[] tableau3 = {1, 2, 3, 5};
+
+        System.out.println(equal(tableau1, tableau2)); 
+        System.out.println(equal(tableau1, tableau3)); 
+    }
+
+    
+    public static boolean equal(int[] tableau1, int[] tableau2) {
+        // Vérifier si les tableaux ont la même longueur
+        if (tableau1.length != tableau2.length) {
+            return false;
+        }
+
+        
+        for (int i = 0; i < tableau1.length; i++) {
+            if (tableau1[i] != tableau2[i]) {
+                return false;
+            }
+        }
+
+        
+        return true;
+    }
+}
