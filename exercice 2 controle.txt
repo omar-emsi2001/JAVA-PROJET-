@@ -1,0 +1,111 @@
+import java.util.Arrays;
+
+
+class Ville implements Comparable<Ville> {
+    String nom;
+    int superficie;
+    int nbHabitants;
+
+    
+    public Ville(String nom, int superficie) {
+        this.nom = nom;
+        this.superficie = superficie;
+    }
+
+    public Ville(String nom, int superficie, int nbHabitants) {
+        this.nom = nom;
+        this.superficie = superficie;
+        this.nbHabitants = nbHabitants;
+    }
+
+    
+    @Override
+    public String toString() {
+        return "Ville [nom=" + nom + ", superficie=" + superficie + ", nbHabitants=" + nbHabitants + "]";
+    }
+
+    @Override
+    public Ville clone() {
+        return new Ville(nom, superficie, nbHabitants);
+    }
+
+    @Override
+    public int compareTo(Ville autreVille) {
+        return this.nom.compareTo(autreVille.nom);
+    }
+}
+
+
+class Capitale extends Ville {
+    String pays;
+
+    
+    public Capitale(String nom, int superficie, String pays) {
+        super(nom, superficie);
+        this.pays = pays;
+    }
+
+    public Capitale(String nom, int superficie, int nbHabitants, String pays) {
+        super(nom, superficie, nbHabitants);
+        this.pays = pays;
+    }
+
+    
+    @Override
+    public String toString() {
+        return "Capitale [nom=" + nom + ", superficie=" + superficie + ", nbHabitants=" + nbHabitants + ", pays=" + pays
+                + "]";
+    }
+
+    @Override
+    public Capitale clone() {
+        return new Capitale(nom, superficie, nbHabitants, pays);
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+        
+        Ville[] villes = {
+                new Ville("Paris", 105, 2148000),
+                new Ville("Berlin", 891, 3769495),
+                new Capitale("Londres", 1572, 8787892, "Royaume-Uni"),
+                new Capitale("Madrid", 605, "Espagne")
+        };
+
+        
+        for (Ville ville : villes) {
+            System.out.println(ville);
+        }
+
+        
+        Arrays.sort(villes);
+
+        
+        System.out.println("\nTableau trié par nom :");
+        for (Ville ville : villes) {
+            System.out.println(ville);
+        }
+
+        
+        Ville nouvelleVille = new Ville("Rome", 1290, 2873000);
+        villes = Arrays.copyOf(villes, villes.length + 1);
+        villes[villes.length - 1] = nouvelleVille;
+
+        
+        villes = Arrays.copyOfRange(villes, 1, villes.length);
+
+        
+        Ville[] copieVilles = Arrays.copyOf(villes, villes.length);
+
+        
+        Collections.reverse(Arrays.asList(villes));
+
+    
+        System.out.println("\nTableau inversé :");
+        for (Ville ville : villes) {
+            System.out.println(ville);
+        }
+    }
+}
