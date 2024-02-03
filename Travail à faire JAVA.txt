@@ -1,0 +1,160 @@
+Travail à faire : 
+
+
+class Personne implements Comparable<Personne>, Cloneable {
+    private String nom;
+    private int age;
+
+    public Personne(String nom, int age) {
+        this.nom = nom;
+        this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "Personne{" +
+                "nom='" + nom + '\'' +
+                ", age=" + age +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Personne personne = (Personne) obj;
+        return age == personne.age && Objects.equals(nom, personne.nom);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nom, age);
+    }
+
+    @Override
+    protected Personne clone() throws CloneNotSupportedException {
+        return (Personne) super.clone();
+    }
+
+    @Override
+    public int compareTo(Personne autrePersonne) {
+        return this.nom.compareTo(autrePersonne.nom);
+    }
+}
+
+class Femme extends Personne {
+    private String couleurRobe;
+
+    public Femme(String nom, int age, String couleurRobe) {
+        super(nom, age);
+        this.couleurRobe = couleurRobe;
+    }
+
+    @Override
+    public String toString() {
+        return "Femme{" +
+                "nom='" + getNom() + '\'' +
+                ", age=" + getAge() +
+                ", couleurRobe='" + couleurRobe + '\'' +
+                '}';
+    }
+
+    @Override
+    protected Femme clone() throws CloneNotSupportedException {
+        return (Femme) super.clone();
+    }
+}
+
+class GestionnairePersonnes {
+    private Personne[] personnes;
+
+    public GestionnairePersonnes(Personne[] personnes) {
+        this.personnes = personnes;
+    }
+
+    public void trierPersonnes() {
+        Arrays.sort(personnes);
+    }
+
+    public void ajouterPersonne(Personne personne) {
+        personnes = Arrays.copyOf(personnes, personnes.length + 1);
+        personnes[personnes.length - 1] = personne;
+    }
+
+    public void supprimerPersonne(int index) {
+        if (index >= 0 && index < personnes.length) {
+            Personne[] nouveauTableau = new Personne[personnes.length - 1];
+            System.arraycopy(personnes, 0, nouveauTableau, 0, index);
+            System.arraycopy(personnes, index + 1, nouveauTableau, index, personnes.length - index - 1);
+            personnes = nouveauTableau;
+        }
+    }
+
+    public int nombrePersonnes() {
+        return personnes.length;
+    }
+
+    public void inverserOrdre() {
+        List<Personne> listePersonnes = Arrays.asList(personnes);
+        Collections.reverse(listePersonnes);
+        personnes = listePersonnes.toArray(new Personne[0]);
+    }
+
+    public void afficherPersonnes() {
+        for (Personne personne : personnes) {
+            System.out.println(personne);
+        }
+    }
+
+    public Personne plusGrand() {
+        return Arrays.stream(personnes).max(Comparator.comparing(Personne::getAge)).orElse(null);
+    }
+
+    public boolean testerEgalite(Personne[] autreTableau) {
+        return Arrays.equals(personnes, autreTableau);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Personne[] personnes = {
+                new Personne("Alice", 25),
+                new Femme("Eva", 30, "Bleu"),
+                new Personne("Bob", 28),
+        };
+
+        GestionnairePersonnes gestionnaire = new GestionnairePersonnes(personnes);
+
+        // Trier les personnes
+        gestionnaire.trierPersonnes();
+
+        // Ajouter une personne
+        gestionnaire.ajouterPersonne(new Personne("Charlie", 22));
+
+        // Supprimer une personne
+        gestionnaire.supprimerPersonne(1);
+
+        // Afficher les personnes
+        gestionnaire.afficherPersonnes();
+
+        // Inverser l'ordre
+        gestionnaire.inverserOrdre();
+
+        // Afficher les personnes après inversion
+        gestionnaire.afficherPersonnes();
+
+        // Afficher la personne la plus âgée
+        System.out.println("Personne la plus âgée : " + gestionnaire.plusGrand());
+
+        // Tester l'égalité avec un autre tableau
+        Personne[] autreTableau = {
+                new Personne("Alice", 25),
+                new Femme("Eva", 30, "Bleu"),
+                new Personne("Bob", 28),
+                new Personne("Charlie", 22),
+        };
+
+        System.out.println("Les tableaux sont égaux : " + gestionnaire.testerEgalite(autreTableau));
+    }
+}
+
