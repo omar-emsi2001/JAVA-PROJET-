@@ -118,9 +118,9 @@ class GestionnairePersonnes {
 public class Main {
     public static void main(String[] args) {
         Personne[] personnes = {
-                new Personne("Alice", 25),
-                new Femme("Eva", 30, "Bleu"),
-                new Personne("Bob", 28),
+                new Personne("Alice", 27),
+                new Femme("Eva", 33, "Bleu"),
+                new Personne("Bob", 23),
         };
 
         GestionnairePersonnes gestionnaire = new GestionnairePersonnes(personnes);
@@ -129,7 +129,7 @@ public class Main {
         gestionnaire.trierPersonnes();
 
         // Ajouter une personne
-        gestionnaire.ajouterPersonne(new Personne("Charlie", 22));
+        gestionnaire.ajouterPersonne(new Personne("Charlie", 26));
 
         // Supprimer une personne
         gestionnaire.supprimerPersonne(1);
@@ -148,10 +148,10 @@ public class Main {
 
         // Tester l'égalité avec un autre tableau
         Personne[] autreTableau = {
-                new Personne("Alice", 25),
-                new Femme("Eva", 30, "Bleu"),
-                new Personne("Bob", 28),
-                new Personne("Charlie", 22),
+                new Personne("Alice", 27),
+                new Femme("Eva", 33, "Bleu"),
+                new Personne("Bob", 23),
+                new Personne("Charlie", 26),
         };
 
         System.out.println("Les tableaux sont égaux : " + gestionnaire.testerEgalite(autreTableau));
